@@ -9,10 +9,13 @@
 
 
 	<context:property-placeholder location="classpath:mongo.properties"  />
-	
-	<mongo:mongo host="${mongo.host.name}" port="mongo.host.port"></mongo:mongo>
+	<!-- 
+	<mongo:mongo host="${mongo.host.name}" port=27017></mongo:mongo>
 	<mongo:db-factory id="mongoDbFactory" dbname="mongo.db.name" />
-	
+	 -->
+	 
+	<mongo:mongo host="${mongo.host.name}" port="${mongo.host.port}"></mongo:mongo>
+	<mongo:db-factory id="mongoDbFactory" dbname="${mongo.db.name}" />
 	<bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
 		<constructor-arg name="mongoDbFactory" ref="mongoDbFactory" />
 	</bean>
