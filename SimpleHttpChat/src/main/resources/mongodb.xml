@@ -14,6 +14,9 @@
 	<mongo:db-factory id="mongoDbFactory" dbname="mongo.db.name" />
 	 -->
 	 
+	<!-- Activate Spring Data MongoDB repository support -->
+  	<mongo:repositories base-package="com.example.chat.repository" />
+	 
 	<mongo:mongo host="${mongo.host.name}" port="${mongo.host.port}"></mongo:mongo>
 	<mongo:db-factory id="mongoDbFactory" dbname="${mongo.db.name}" />
 	<bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
