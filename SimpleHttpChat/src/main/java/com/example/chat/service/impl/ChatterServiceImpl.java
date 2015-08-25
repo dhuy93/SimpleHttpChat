@@ -27,7 +27,7 @@ public class ChatterServiceImpl implements ChatterService {
 	 * @see com.example.chat.service.UserService#addUser(com.example.chat.model.Chatter)
 	 */
 	@Override
-	public Chatter addChatter(Chatter chatter) {
+	public Chatter saveChatter(Chatter chatter) {
 		Chatter savedChatter = chatterRepo.save(chatter);
 		return savedChatter;
 	}

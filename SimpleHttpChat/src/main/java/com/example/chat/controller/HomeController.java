@@ -2,7 +2,6 @@ package com.example.chat.controller;
 
 import java.text.DateFormat;
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 
 import org.slf4j.Logger;
@@ -14,11 +13,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.example.chat.dto.MessageDTO;
-import com.example.chat.model.Chatter;
 import com.example.chat.service.MessageService;
 import com.example.chat.service.ChatterService;
-import com.google.gson.Gson;
 
 /**
  * Handles requests for the application home page.
@@ -49,14 +45,14 @@ public class HomeController {
 		model.addAttribute("serverTime", formattedDate );
 		
 		// Add 2 new users
-		Chatter sender = new Chatter();
-		Chatter receiver = new Chatter();
-		sender.setEmail("abc@cba.com");
-		sender.setFirstname("Huy");
-		receiver.setEmail("xyz@xyz.com");
-		receiver.setFirstname("Binh");
-		chatterService.addChatter(sender);
-		chatterService.addChatter(receiver);
+//		Chatter sender = new Chatter();
+//		Chatter receiver = new Chatter();
+//		sender.setEmail("abc@cba.com");
+//		sender.setFirstname("Huy");
+//		receiver.setEmail("xyz@xyz.com");
+//		receiver.setFirstname("Binh");
+//		chatterService.saveChatter(sender);
+//		chatterService.saveChatter(receiver);
 		
 		
 

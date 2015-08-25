@@ -12,7 +12,7 @@ import com.example.chat.model.Chatter;
  */
 public interface ChatterService {
 
-	Chatter addChatter(Chatter chatter);
+	Chatter saveChatter(Chatter chatter);
 	
 	Chatter getChatterByEmail(String email);
 	ChatterDTO getChatterDTOByEmail(String email);
