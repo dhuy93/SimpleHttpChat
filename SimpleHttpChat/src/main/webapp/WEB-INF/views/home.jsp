@@ -10,6 +10,6 @@
 </h1>
 
 <P>  The time on the server is ${serverTime}. </P>
-<%-- <p> ${msg}</p> --%>
+<p> ${msg}</p>
 </body>
 </html>

@@ -60,7 +60,7 @@ public class MessageServiceImpl implements MessageService {
 			dto.setContent(msg.getContent());
 			msgDTOList.add(dto);
 		}
-		return null;
+		return msgDTOList;
 	}
 
 }

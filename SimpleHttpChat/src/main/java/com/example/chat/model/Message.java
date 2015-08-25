@@ -9,6 +9,8 @@ import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import com.google.gson.Gson;
+
 /**
  * @author ldhuy
  *
@@ -18,13 +20,20 @@ public class Message {
 
 	@Id
 	private ObjectId id;
-	private User sender;
-	private User receiver;
+	private Chatter sender;
+	private Chatter receiver;
 	private Date createdTime;
 	private String content;
 	
 	public Message() {
 		
+	}
+	
+	@Override
+	public String toString() {
+		Gson gson = new Gson();
+		String str = gson.toJson(this);
+		return str;
 	}
 
 	/**
@@ -44,28 +53,28 @@ public class Message {
 	/**
 	 * @return the sender
 	 */
-	public User getSender() {
+	public Chatter getSender() {
 		return sender;
 	}
 
 	/**
 	 * @param sender the sender to set
 	 */
-	public void setSender(User sender) {
+	public void setSender(Chatter sender) {
 		this.sender = sender;
 	}
 
 	/**
 	 * @return the receiver
 	 */
-	public User getReceiver() {
+	public Chatter getReceiver() {
 		return receiver;
 	}
 
 	/**
 	 * @param receiver the receiver to set
 	 */
-	public void setReceiver(User receiver) {
+	public void setReceiver(Chatter receiver) {
 		this.receiver = receiver;
 	}
 

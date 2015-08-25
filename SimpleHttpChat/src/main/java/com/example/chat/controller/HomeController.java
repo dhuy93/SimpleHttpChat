@@ -1,7 +1,6 @@
 package com.example.chat.controller;
 
 import java.text.DateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -15,10 +14,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.example.chat.model.Message;
-import com.example.chat.model.User;
+import com.example.chat.dto.MessageDTO;
+import com.example.chat.model.Chatter;
 import com.example.chat.service.MessageService;
-import com.example.chat.service.UserService;
+import com.example.chat.service.ChatterService;
+import com.google.gson.Gson;
 
 /**
  * Handles requests for the application home page.
@@ -28,7 +28,7 @@ public class HomeController {
 	@Autowired
 	MongoTemplate mongoTpl;
 	@Autowired
-	UserService userService;
+	ChatterService chatterService;
 	@Autowired
 	MessageService msgService;
 	
@@ -49,35 +49,41 @@ public class HomeController {
 		model.addAttribute("serverTime", formattedDate );
 		
 		// Add 2 new users
-//		User sender = new User();
-//		User receiver = new User();
-//		sender.setEmail("abc@cba.com");
-//		sender.setFirstname("Huy");
-//		receiver.setEmail("xyz@xyz.com");
-//		receiver.setFirstname("Binh");
-//		userService.addUser(sender);
-//		userService.addUser(receiver);
+		Chatter sender = new Chatter();
+		Chatter receiver = new Chatter();
+		sender.setEmail("abc@cba.com");
+		sender.setFirstname("Huy");
+		receiver.setEmail("xyz@xyz.com");
+		receiver.setFirstname("Binh");
+		chatterService.addChatter(sender);
+		chatterService.addChatter(receiver);
 		
 		
 
 		// Get 2 users
-		User u1 = userService.getUserByEmail("abc@cba.com");
-		User u2 = userService.getUserByEmail("xyz@xyz.com");
+//		Chatter u1 = chatterService.getChatterByEmail("abc@cba.com");
+//		Chatter u2 = chatterService.getChatterByEmail("xyz@xyz.com");
+		
 //		Gson gson = new Gson();
 //		String msg = gson.toJson(u1);
 //		model.addAttribute("msg", msg);
 		
-		List<Message> msgList = new ArrayList<Message>();
-		for (int i=0;i<20; ++i) {
-			Message msg = new Message();
-			msg.setSender(u1);
-			msg.setReceiver(u2);
-			msg.setCreatedTime(new Date(System.currentTimeMillis()));
-			msg.setContent("test msg #" + i);
-			msgService.addMessage(msg);
-			msgList.add(msg);
-		}
+//		List<Message> msgList = new ArrayList<Message>();
+//		for (int i=0;i<20; ++i) {
+//			Message msg = new Message();
+//			msg.setSender(u1);
+//			msg.setReceiver(u2);
+//			msg.setCreatedTime(new Date(System.currentTimeMillis()));
+//			msg.setContent("test msg #" + i);
+//			msgService.addMessage(msg);
+//			msgList.add(msg);
+//		}
 		
+		// Get conversation
+//		List<MessageDTO> msgList = msgService.getMessagesDTOByUserEmail(u1.getEmail(), u2.getEmail());
+//		Gson gson = new Gson();
+//		String msg = gson.toJson(msgList);
+//		model.addAttribute("msg", msg);
 		
 		
 		
