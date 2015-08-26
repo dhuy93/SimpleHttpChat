@@ -8,6 +8,8 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import com.google.gson.Gson;
+
 /**
  * @author ldhuy
  *
@@ -24,6 +26,17 @@ public class User {
 	private String password;
 	private String salt;
 	private int role;
+	
+	@Override
+	public String toString() {
+		Gson gson = new Gson();
+		String json = gson.toJson(this);
+		return json;
+	}
+	
+	public User() {
+		
+	}
 	/**
 	 * @return the id
 	 */

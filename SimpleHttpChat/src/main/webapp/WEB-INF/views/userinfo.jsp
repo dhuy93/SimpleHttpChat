@@ -8,7 +8,7 @@
 <title>User Information</title>
 </head>
 <body>
-	<table>
+	<table>Basic information
 		<tr>
 			<td>Email</td>
 			<td>${email}</td>

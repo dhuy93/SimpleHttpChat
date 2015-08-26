@@ -4,6 +4,7 @@ import java.text.DateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import org.bson.types.ObjectId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,8 +14,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.example.chat.service.MessageService;
+import com.example.chat.model.User;
 import com.example.chat.service.ChatterService;
+import com.example.chat.service.MessageService;
+import com.example.chat.service.UserService;
+import com.google.gson.Gson;
 
 /**
  * Handles requests for the application home page.
@@ -27,6 +31,8 @@ public class HomeController {
 	ChatterService chatterService;
 	@Autowired
 	MessageService msgService;
+	@Autowired
+	UserService userService;
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
@@ -82,6 +88,16 @@ public class HomeController {
 //		model.addAttribute("msg", msg);
 		
 		
+		// Save user
+//		User user = new User();
+//		user.setUsername(System.currentTimeMillis() + ".com");
+//		user.setPassword("password");
+//		user.setSalt("salt");
+//		user.setRole(0);
+//		User savedUser = userService.saveUser(user);
+//		Gson gson = new Gson();
+//		String str = gson.toJson(savedUser);
+//		System.out.println(str);
 		
 		return "home";
 	}

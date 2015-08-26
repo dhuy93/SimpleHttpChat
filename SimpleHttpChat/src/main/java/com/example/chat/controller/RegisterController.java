@@ -6,7 +6,7 @@ package com.example.chat.controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.authentication.encoding.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -33,6 +33,8 @@ public class RegisterController {
 	private ChatterService chatterServicce;
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 
 	@RequestMapping(value="register", method=RequestMethod.GET)
 	public ModelAndView register() {
@@ -42,9 +44,11 @@ public class RegisterController {
 	@RequestMapping(value="register/submit", method=RequestMethod.POST)
 	public String submitNewUser(@ModelAttribute("chatter") Chatter newChatter, ModelMap model) {
 		// Encode password
-		//TODO: change to md5
-		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-		String hashedPassword = passwordEncoder.encode(newChatter.getPassword());
+//		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+//		String hashedPassword = passwordEncoder.encode(newChatter.getPassword());
+//		newChatter.setPassword(hashedPassword);
+		String salt = String.valueOf(System.currentTimeMillis());
+		String hashedPassword = passwordEncoder.encodePassword(newChatter.getPassword(), salt);
 		newChatter.setPassword(hashedPassword);
 		
 		Chatter savedChatter = chatterServicce.saveChatter(newChatter);
@@ -56,6 +60,7 @@ public class RegisterController {
 		// Save new chatter to 'users' collection
 		User newUser = new User();
 		newUser.setPassword(hashedPassword);
+		newUser.setSalt(salt);
 		newUser.setRole(1);
 		newUser.setUsername(newChatter.getEmail());
 		

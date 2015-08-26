@@ -12,7 +12,6 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import com.example.chat.repository.UserRepository;
@@ -23,7 +22,6 @@ import com.example.chat.service.CustomUserDetailsService;
  *
  */
 @Service("customUserDetailsService")
-@Repository
 public class CustomUserDetailsServiceImpl implements CustomUserDetailsService {
 
 	@Autowired
@@ -33,14 +31,12 @@ public class CustomUserDetailsServiceImpl implements CustomUserDetailsService {
 	 */
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		// TODO Auto-generated method stub
 		com.example.chat.model.User user = userRepo.findByUsername(username);
 		List<GrantedAuthority> authorities = getAuthorities(user.getRole());
 		org.springframework.security.core.userdetails.User userDetail = new User(user.getUsername(), user.getPassword(), true, true, true, true, authorities);
 		return userDetail;
 	}
 	public List<GrantedAuthority> getAuthorities(Integer role) {
-		// TODO Auto-generated method stub
 		List<GrantedAuthority> authList = new ArrayList<GrantedAuthority>();
 		if (role.intValue() == 1) {
 			authList.add(new SimpleGrantedAuthority("ROLE_CHATTER"));

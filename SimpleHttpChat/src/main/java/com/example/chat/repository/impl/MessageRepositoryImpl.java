@@ -15,7 +15,6 @@ import org.springframework.data.mongodb.core.query.Query;
 import com.example.chat.model.Message;
 import com.example.chat.model.Chatter;
 import com.example.chat.repository.extend.MessageRepositoryExtend;
-import com.mongodb.BasicDBObject;
 
 /**
  * @author ldhuy

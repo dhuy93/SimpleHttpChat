@@ -20,7 +20,7 @@ import com.example.chat.service.UserService;
 public class UserServiceImpl implements UserService {
 
 	@Autowired
-	UserRepository userRepo;
+	private UserRepository userRepo;
 	/* (non-Javadoc)
 	 * @see com.example.chat.service.UserService#saveUser(com.example.chat.model.User)
 	 */
@@ -28,6 +28,12 @@ public class UserServiceImpl implements UserService {
 	public User saveUser(User user) {
 		User savedUser = userRepo.save(user);
 		return savedUser;
+	}
+	
+	@Override
+	public User findByUsername(String username) {
+		User foundUser = userRepo.findByUsername(username);
+		return foundUser;
 	}
 
 }
