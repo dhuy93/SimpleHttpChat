@@ -17,7 +17,7 @@
 			</tr>
 			<tr>
 				<td><form:label path="password">Password</form:label></td>
-				<td><form:input path="password"></form:input></td>
+				<td><form:password path="password"></form:password></td>
 			</tr>
 			<tr>
 				<td><form:label path="firstname">First name</form:label></td>

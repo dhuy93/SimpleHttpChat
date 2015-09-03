@@ -20,8 +20,8 @@ public class Message {
 
 	@Id
 	private ObjectId id;
-	private Chatter sender;
-	private Chatter receiver;
+	private String sender;
+	private String receiver;
 	private Date createdTime;
 	private String content;
 	
@@ -53,28 +53,28 @@ public class Message {
 	/**
 	 * @return the sender
 	 */
-	public Chatter getSender() {
+	public String getSender() {
 		return sender;
 	}
 
 	/**
 	 * @param sender the sender to set
 	 */
-	public void setSender(Chatter sender) {
+	public void setSender(String sender) {
 		this.sender = sender;
 	}
 
 	/**
 	 * @return the receiver
 	 */
-	public Chatter getReceiver() {
+	public String getReceiver() {
 		return receiver;
 	}
 
 	/**
 	 * @param receiver the receiver to set
 	 */
-	public void setReceiver(Chatter receiver) {
+	public void setReceiver(String receiver) {
 		this.receiver = receiver;
 	}
 

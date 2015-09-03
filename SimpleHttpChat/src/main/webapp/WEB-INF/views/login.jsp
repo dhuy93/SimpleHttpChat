@@ -40,7 +40,7 @@
 </head>
 <body onload='document.loginForm.username.focus();'>
 
-	<h1>Spring Security Custom Login Form (XML)</h1>
+	<h1>Login</h1>
 
 	<div id="login-box">
 
@@ -53,28 +53,37 @@
 			<div class="msg">${msg}</div>
 		</c:if>
 
-		<form name='loginForm'
-			action="<c:url value='j_spring_security_check' />" method='POST'>
-
-		<table>
-			<tr>
-				<td>Email:</td>
-				<td><input type='text' name='username' value=''></td>
-			</tr>
-			<tr>
-				<td>Password:</td>
-				<td><input type='password' name='password' /></td>
-			</tr>
-			<tr>
-				<td colspan='2'><input name="submit" type="submit"
-					value="submit" /></td>
-			</tr>
-		</table>
-
-		<%-- <input type="hidden" name="${_csrf.parameterName}"
-			value="${_csrf.token}" /> --%>
-
-		</form>
+		<c:choose>
+		
+			<c:when test="${true != loggedIn}">		
+				<c:url value="/j_spring_security_check" var="loginUrl" />
+				<form name='f'
+					action="${loginUrl}" method='POST'>
+		
+				<table>
+					<tr>
+						<td>Email:</td>
+						<td><input type='text' name='j_username' value=''></td>
+					</tr>
+					<tr>
+						<td>Password:</td>
+						<td><input type='password' name='j_password' /></td>
+					</tr>
+					<tr>
+						<td colspan='2'><input name="submit" type="submit"
+							value="Sign in" /></td>
+					</tr>
+				</table>
+		
+				<%-- <input type="hidden" name="${_csrf.parameterName}"
+					value="${_csrf.token}" /> --%>
+		
+				</form>
+			</c:when>
+			<c:otherwise>
+				<p>You have successfully logged in as ${user}</p>
+			</c:otherwise>
+		</c:choose>
 	</div>
 
 </body>

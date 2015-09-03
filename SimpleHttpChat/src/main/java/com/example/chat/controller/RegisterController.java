@@ -48,7 +48,8 @@ public class RegisterController {
 //		String hashedPassword = passwordEncoder.encode(newChatter.getPassword());
 //		newChatter.setPassword(hashedPassword);
 		String salt = String.valueOf(System.currentTimeMillis());
-		String hashedPassword = passwordEncoder.encodePassword(newChatter.getPassword(), salt);
+//		String hashedPassword = passwordEncoder.encodePassword(newChatter.getPassword(), salt);
+		String hashedPassword = passwordEncoder.encodePassword(newChatter.getPassword(), null);
 		newChatter.setPassword(hashedPassword);
 		
 		Chatter savedChatter = chatterServicce.saveChatter(newChatter);
@@ -60,7 +61,8 @@ public class RegisterController {
 		// Save new chatter to 'users' collection
 		User newUser = new User();
 		newUser.setPassword(hashedPassword);
-		newUser.setSalt(salt);
+//		newUser.setSalt(salt);
+		newUser.setSalt("");
 		newUser.setRole(1);
 		newUser.setUsername(newChatter.getEmail());
 		

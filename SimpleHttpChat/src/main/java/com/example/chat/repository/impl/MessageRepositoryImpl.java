@@ -31,8 +31,8 @@ public class MessageRepositoryImpl implements MessageRepositoryExtend {
 	public List<Message> findByChatters(Chatter u1, Chatter u2) {
 		// Search by user id
 		String queryCnt = String.format(
-				"{$or:[{\"sender._id\": {$oid:\"%s\"}, \"receiver._id\": {$oid:\"%s\"}}, {\"sender._id\": {$oid:\"%s\"}, \"receiver._id\": {$oid:\"%s\"}}]}",
-				u1.getId().toString(), u2.getId().toString(), u2.getId().toString(), u1.getId().toString());
+				"{$or:[{\"sender\": \"%s\", \"receiver\": \"%s\"}, {\"sender\": \"%s\", \"receiver\": \"%s\"}]}",
+				u1.getEmail(), u2.getEmail(), u2.getEmail(), u1.getEmail());
 		
 		BasicQuery query = new BasicQuery(queryCnt);
 		query.with(new Sort(Sort.Direction.ASC, "createdTime"));

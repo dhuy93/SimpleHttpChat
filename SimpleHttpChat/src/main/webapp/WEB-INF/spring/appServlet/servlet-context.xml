@@ -23,9 +23,7 @@
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 	
-	<!-- <context:component-scan base-package="com.example.chat" /> -->
-	<beans:import resource="classpath:mongodb.xml" />	
-	<beans:import resource="classpath:spring-security.xml" />
+
 	
 	
 	
@@ -36,5 +34,17 @@
 
 	<!-- Password encoder -->
 	<beans:bean class="org.springframework.security.authentication.encoding.Md5PasswordEncoder" id="passwordEncoder" />
+	
+	
+	<beans:bean
+		class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+		<beans:property name="exceptionMappings">
+			<beans:props>
+				<beans:prop key="java.lang.Exception">Error</beans:prop>
+			</beans:props>
+		</beans:property>
+	</beans:bean>
+	
+	
 	
 </beans:beans>
