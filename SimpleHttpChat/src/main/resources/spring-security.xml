@@ -12,6 +12,7 @@
 	<http auto-config="true" use-expressions="true">
 		<intercept-url pattern="/userinfo/*" access="hasRole('ROLE_CHATTER')"/>
 		<intercept-url pattern="/chatWindow/*" access="hasRole('ROLE_CHATTER')"/>
+		<intercept-url pattern="/addFriend" access="hasRole('ROLE_CHATTER')"/>
 		<intercept-url pattern="/j_spring_security_check" access="IS_AUTHENTICATED_ANONYMOUSLY"/> 
 	    <intercept-url pattern="/login.jsp*" access="hasRole('ROLE_CHATTER')"/>
 		
