@@ -10,15 +10,15 @@
 	<context:component-scan base-package="com.example.chat.service" />
         
 	<http auto-config="true" use-expressions="true">
-		<intercept-url pattern="/register/userinfo/*" access="hasRole('ROLE_CHATTER')"/>
-		<intercept-url pattern="/register/chat/*" access="hasRole('ROLE_CHATTER')"/>
+		<intercept-url pattern="/userinfo/*" access="hasRole('ROLE_CHATTER')"/>
+		<intercept-url pattern="/chatWindow/*" access="hasRole('ROLE_CHATTER')"/>
 		<intercept-url pattern="/j_spring_security_check" access="IS_AUTHENTICATED_ANONYMOUSLY"/> 
 	    <intercept-url pattern="/login.jsp*" access="hasRole('ROLE_CHATTER')"/>
 		
 		
 		<form-login 
 		    login-page="/login" 
-		    default-target-url="/" 
+		    default-target-url="/login?success" 
 			authentication-failure-url="/login?error" />
 		<logout logout-success-url="/login?logout" />
 	</http>
@@ -32,19 +32,4 @@
 
 	<beans:bean id="springSecurityFilterChain" class="org.springframework.web.filter.DelegatingFilterProxy"/>
 	
-	
-	<!-- <beans:bean id="springSecurityFilterChain"
-		class="org.springframework.security.web.FilterChainProxy">
-		<filter-chain-map path-type="ant">
-			<filter-chain pattern="/images/**" filters="none" />
-			<filter-chain pattern="/styles/**" filters="none" />
-			<filter-chain pattern="/scripts/**" filters="none" />
-			<filter-chain pattern="/app/**"
-				filters=" 
-	securityContextPersistenceFilter, 
-	authenticationProcessingFilter, 
-	exceptionTranslationFilter, 
-	filterSecurityInterceptor" />
-		</filter-chain-map>
-	</beans:bean>  -->
 </beans:beans>

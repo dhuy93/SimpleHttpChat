@@ -3,6 +3,8 @@
  */
 package com.example.chat.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
@@ -55,6 +57,14 @@ public class ChatterServiceImpl implements ChatterService {
 		userdto.setPassword(foundUser.getPassword());
 		
 		return userdto;
+	}
+
+	@Override
+	public List<String> addFriend(String ownerEmail, String friendEmail) {
+		List<String> emailList = chatterRepo.addFriend(ownerEmail, friendEmail);
+		chatterRepo.addFriend(friendEmail, ownerEmail);
+		
+		return emailList;
 	}
 
 }

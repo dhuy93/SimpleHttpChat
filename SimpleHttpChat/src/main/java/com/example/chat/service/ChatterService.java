@@ -3,6 +3,8 @@
  */
 package com.example.chat.service;
 
+import java.util.List;
+
 import com.example.chat.dto.ChatterDTO;
 import com.example.chat.model.Chatter;
 
@@ -16,4 +18,6 @@ public interface ChatterService {
 	
 	Chatter getChatterByEmail(String email);
 	ChatterDTO getChatterDTOByEmail(String email);
+	
+	List<String> addFriend(String ownerEmail, String friendEmail);
 }

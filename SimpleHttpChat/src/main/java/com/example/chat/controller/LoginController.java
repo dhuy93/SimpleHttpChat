@@ -7,6 +7,8 @@ import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.FindAndModifyOptions;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -15,6 +17,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.example.chat.model.Chatter;
+import com.example.chat.service.ChatterService;
 
 /**
  * @author ldhuy
@@ -26,9 +31,12 @@ public class LoginController {
 	@SuppressWarnings("unused")
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
+	@Autowired
+	private ChatterService chatterService;
+	
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public ModelAndView login(@RequestParam(value = "error", required = false) String error,
-			@RequestParam(value = "logout", required = false) String logout) {
+			@RequestParam(value = "logout", required = false) String logout, @RequestParam(value = "success", required = false) String success) {
 		// Get current logged in user (if there is one)
 		ModelAndView model = new ModelAndView();
 		
@@ -49,15 +57,23 @@ public class LoginController {
 		}
 		model.setViewName("login");
 
+		if (success != null) {
+			model.setViewName("userinfo");
+			Chatter chatter = chatterService.getChatterByEmail(auth.getName());
+			model.addObject("chatter", chatter);
+			return model;
+		}
 		return model;
 
 	}
 	
 	@RequestMapping(value="/login/success", method=RequestMethod.GET)
-	public String handleLoginSuccess(@RequestParam("success")String success, Map<String, Object> model){
-		model.put("loggedIn", true);
-		model.put("user", SecurityContextHolder.getContext().getAuthentication().getName());
-		return "login";
+	public ModelAndView handleLoginSuccess(@RequestParam("success")String success, Map<String, Object> model){
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String username = auth.getName();
+		Chatter chatter = chatterService.getChatterByEmail(username);
+		return new ModelAndView("userinfo", "chatter", chatter);
+		
 	}
 	
 	

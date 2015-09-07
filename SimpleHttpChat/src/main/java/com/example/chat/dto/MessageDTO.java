@@ -9,11 +9,11 @@ package com.example.chat.dto;
  */
 public class MessageDTO {
 
-	private String _id;
-	private String sender;
-	private String receiver;
-	private String createdTime;
-	private String content;
+	public String _id;
+	public String sender;
+	public String receiver;
+	public String createdTime;
+	public String content;
 	
 	/**
 	 * @return the _id

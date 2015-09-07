@@ -43,30 +43,19 @@ public class RegisterController {
 	
 	@RequestMapping(value="register/submit", method=RequestMethod.POST)
 	public String submitNewUser(@ModelAttribute("chatter") Chatter newChatter, ModelMap model) {
-		// Encode password
-//		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-//		String hashedPassword = passwordEncoder.encode(newChatter.getPassword());
-//		newChatter.setPassword(hashedPassword);
-		String salt = String.valueOf(System.currentTimeMillis());
-//		String hashedPassword = passwordEncoder.encodePassword(newChatter.getPassword(), salt);
 		String hashedPassword = passwordEncoder.encodePassword(newChatter.getPassword(), null);
 		newChatter.setPassword(hashedPassword);
 		
 		Chatter savedChatter = chatterServicce.saveChatter(newChatter);
-		model.addAttribute("email", savedChatter.getEmail());
-		model.addAttribute("firstname", savedChatter.getFirstname());
-		model.addAttribute("lastname", savedChatter.getLastname());
-		model.addAttribute("emaillist", savedChatter.getEmailList());
-		
-		// Save new chatter to 'users' collection
+		model.addAttribute("chatter", savedChatter);
+
 		User newUser = new User();
 		newUser.setPassword(hashedPassword);
-//		newUser.setSalt(salt);
 		newUser.setSalt("");
 		newUser.setRole(1);
 		newUser.setUsername(newChatter.getEmail());
 		
 		userService.saveUser(newUser);
-		return "userinfo";
+		return "login";
 	}
 }

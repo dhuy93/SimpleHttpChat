@@ -50,54 +50,7 @@ public class HomeController {
 		
 		model.addAttribute("serverTime", formattedDate );
 		
-		// Add 2 new users
-//		Chatter sender = new Chatter();
-//		Chatter receiver = new Chatter();
-//		sender.setEmail("abc@cba.com");
-//		sender.setFirstname("Huy");
-//		receiver.setEmail("xyz@xyz.com");
-//		receiver.setFirstname("Binh");
-//		chatterService.saveChatter(sender);
-//		chatterService.saveChatter(receiver);
 		
-		
-
-		// Get 2 users
-//		Chatter u1 = chatterService.getChatterByEmail("abc@cba.com");
-//		Chatter u2 = chatterService.getChatterByEmail("xyz@xyz.com");
-		
-//		Gson gson = new Gson();
-//		String msg = gson.toJson(u1);
-//		model.addAttribute("msg", msg);
-		
-//		List<Message> msgList = new ArrayList<Message>();
-//		for (int i=0;i<20; ++i) {
-//			Message msg = new Message();
-//			msg.setSender(u1);
-//			msg.setReceiver(u2);
-//			msg.setCreatedTime(new Date(System.currentTimeMillis()));
-//			msg.setContent("test msg #" + i);
-//			msgService.addMessage(msg);
-//			msgList.add(msg);
-//		}
-		
-		// Get conversation
-//		List<MessageDTO> msgList = msgService.getMessagesDTOByUserEmail(u1.getEmail(), u2.getEmail());
-//		Gson gson = new Gson();
-//		String msg = gson.toJson(msgList);
-//		model.addAttribute("msg", msg);
-		
-		
-		// Save user
-//		User user = new User();
-//		user.setUsername(System.currentTimeMillis() + ".com");
-//		user.setPassword("password");
-//		user.setSalt("salt");
-//		user.setRole(0);
-//		User savedUser = userService.saveUser(user);
-//		Gson gson = new Gson();
-//		String str = gson.toJson(savedUser);
-//		System.out.println(str);
 		
 		return "home";
 	}

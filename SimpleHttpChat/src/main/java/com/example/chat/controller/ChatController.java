@@ -13,7 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,12 +24,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.example.chat.dto.ChatterDTO;
 import com.example.chat.dto.MessageDTO;
+import com.example.chat.model.Chatter;
 import com.example.chat.model.Message;
 import com.example.chat.model.NewChatContentModel;
 import com.example.chat.model.User;
+import com.example.chat.service.ChatterService;
 import com.example.chat.service.MessageService;
 import com.example.chat.service.UserService;
+import com.google.gson.Gson;
 
 /**
  * @author ldhuy
@@ -42,6 +48,8 @@ public class ChatController {
 	private UserService userService;
 	@Autowired
 	private MessageService msgService;
+	@Autowired
+	private ChatterService chatterService;
 	
 	@RequestMapping(value="/chatWindow/{email:.+}", method = RequestMethod.GET)
 	public @ResponseBody ModelAndView getConversation(@PathVariable(value = "email") String email) {
@@ -54,7 +62,6 @@ public class ChatController {
 		List<String> conversation = new ArrayList<String>();
 		User user = userService.findByUsername(email);
 		if (user != null) {
-			//TODO: get logged in username then get conversation here
 			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 			String username = auth.getName();
 			List<MessageDTO> msgList = msgService.getMessagesDTOByUserEmail(username, email);
@@ -69,28 +76,7 @@ public class ChatController {
 		model.addObject("command", new NewChatContentModel());
 		return model;
 	}
-	
-//	@RequestMapping(value="/chatWindow", params={"pal"})
-//	public @ResponseBody ModelAndView getConversation(@RequestParam(value="pal") String palEmail) {
-//		List<String> conversation = new ArrayList<String>();
-//		User user = userService.findByUsername(palEmail);
-//		if (user != null) {
-//			//TODO: get logged in username then get conversation here
-//			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-//			String username = auth.getName();
-//			List<MessageDTO> msgList = msgService.getMessagesDTOByUserEmail(username, palEmail);
-//			for (MessageDTO ms : msgList) {
-//				String str = ms.getSender() + " @ " + ms.getCreatedTime() + ":\t" + ms.getContent();
-//				conversation.add(str);
-//			}
-//			
-//		}
-//		ModelAndView model = new ModelAndView("chat", "conversation", conversation);
-//		model.addObject("palEmail", palEmail);
-//		model.addObject("command", new NewChatContentModel());
-//		return model;
-//	}
-	
+		
 	@RequestMapping(value="chatWindow/sendNewMsg", method=RequestMethod.POST)
 	public String addUser(@ModelAttribute("newChatContentModel") NewChatContentModel newMessage, ModelMap model) {
 		
@@ -114,8 +100,41 @@ public class ChatController {
 			conversation.add(str);
 		}
 		model.addAttribute("conversation", conversation);
-//		String newAddr = "/chat/chatWindow?pal=" + newMessage.getReceiver();
 		String newAddr = "/chat/chatWindow/" + newMessage.getReceiver();
 		return newAddr;
+	}
+	
+	@RequestMapping(value = "chatWindow/refreshconversation.html", method=RequestMethod.GET)
+	public @ResponseBody String refreshConversation(@RequestParam("palEmail") String palEmail, @RequestParam("newContent") String newContent) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String sender = auth.getName();
+		if (! newContent.equals("")) {
+			Message newMsg = new Message();
+			newMsg.setContent(newContent);
+			newMsg.setCreatedTime(new Date());
+			newMsg.setReceiver(palEmail);
+			newMsg.setSender(sender);
+			msgService.addMessage(newMsg);
+		}
+		List<MessageDTO> msgList = msgService.getMessagesDTOByUserEmail(palEmail, sender);
+		Gson gson = new Gson();
+		String responseData = gson.toJson(msgList);
+		return responseData;
+	}
+	
+	@RequestMapping(value = "addFriend", method = RequestMethod.GET)
+	public ModelAndView addFriend(Model model) {
+		return new ModelAndView("addFriend", "command", new ChatterDTO());
+	}
+	
+	@RequestMapping(value = "doAddFriend", method = RequestMethod.POST)
+	public String doAddFriend(@ModelAttribute("email") String email, ModelMap model) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String username = auth.getName();
+		chatterService.addFriend(username, email);
+		
+		Chatter chatter = chatterService.getChatterByEmail(username);
+		model.addAttribute("chatter", chatter);
+		return "userinfo";
 	}
 }

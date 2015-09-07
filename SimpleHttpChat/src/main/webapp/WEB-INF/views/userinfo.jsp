@@ -8,29 +8,54 @@
 <title>User Information</title>
 </head>
 <body>
-	<table>Basic information
+	<h2>Basic information</h2>
+	<table>
 		<tr>
 			<td>Email</td>
-			<td>${email}</td>
+			<td>${chatter.email}</td>
 		</tr>
 		<tr>
 			<td>First name</td>
-			<td>${firstname}</td>
+			<td>${chatter.firstname}</td>
 		</tr>
 		<tr>
 			<td>Last name</td>
-			<td>${lastname}</td>
+			<td>${chatter.lastname}</td>
 		</tr>
 		<tr>
 			<td>Friend list</td>
 			<td>
 				<ul>
-					<c:forEach var="email" items="${emaillist}">
+					<c:forEach var="email" items="${chatter.emailList}">
 						<li><c:out value="${email}"></c:out></li>
 					</c:forEach>
 				</ul>
 			</td>
 		</tr>
 	</table>
+	
+	
+	
+	
+	<!-- Logout form -->
+	<c:url value="/j_spring_security_logout" var="logoutUrl" />
+
+	<!-- csrt for log out-->
+	<form action="${logoutUrl}" method="post" id="logoutForm">
+	</form>
+	
+	
+	<script>
+		function formSubmit() {
+			document.getElementById("logoutForm").submit();
+		}
+	</script>
+
+
+	<h2>
+		Welcome : ${pageContext.request.userPrincipal.name} | <a
+			href="javascript:formSubmit()"> Logout</a>
+	</h2>
+
 </body>
 </html>

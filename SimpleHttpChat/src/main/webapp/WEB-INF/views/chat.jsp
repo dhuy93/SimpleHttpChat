@@ -6,33 +6,34 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script type="text/javascript" src="<c:url value="/resources/js/chatting_script.js"/>"></script>
 <title>Chat window</title>
 </head>
 <body>
-	<table>
-		<c:forEach var="line" items="${conversation}">
-			<tr>
-				<td><c:out value="${line}"></c:out></td>
-			</tr>
-		</c:forEach>
+	
+	<table id="items">
+		<tr id="tr0">
+			<td class="time"></td>
+			<td class="from"></td>
+			<td class="msgContent"></td>
+		</tr>
 	</table>
 
-	<form:form method="POST" action="sendNewMsg">
-		<table>
-			<tr>
-				<td><form:label path="content" style="display:none;">content</form:label></td>
-				<td><form:input path="content"></form:input></td>
-			</tr>
-			<tr>
-				<td><form:label path="receiver" style="display:none;">receiver</form:label></td>
-				<td><form:input path="receiver" value="${palEmail}"></form:input></td>
-			</tr>
-			<tr>
-				<td colspan="2"><input name="send" type="submit" value="Send" /></td>
-			</tr>
-		</table>
-		<!-- <textarea name="content" rows="3" cols="30"></textarea> -->
-	</form:form>
+	
+	<table>
+		<tr>
+			<td><label style="display:none;">content</label></td>
+			<td><input id="newContent"></input></td>
+		</tr>
+		<tr>
+			<td><input style="display:none;" id="buffer"></input></td>
+			<td><input style="display:none;" value="${palEmail}" id="palEmailInput"></input></td>
+		</tr>
+		<tr>
+			<td colspan="2"><button id="send" onclick="onClickSendBtn()">Send</button></td>
+		</tr>
+	</table>
 
 </body>
 </html>
