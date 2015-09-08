@@ -69,12 +69,17 @@ public class LoginController {
 	
 	@RequestMapping(value="/login/success", method=RequestMethod.GET)
 	public ModelAndView handleLoginSuccess(@RequestParam("success")String success, Map<String, Object> model){
+		return this.viewUserInfo();
+		
+	}
+	
+	
+	@RequestMapping(value = "userinfo", method = RequestMethod.GET)
+	public ModelAndView viewUserInfo() {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String username = auth.getName();
 		Chatter chatter = chatterService.getChatterByEmail(username);
 		return new ModelAndView("userinfo", "chatter", chatter);
-		
 	}
-	
 	
 }
