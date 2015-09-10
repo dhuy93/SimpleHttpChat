@@ -43,6 +43,14 @@ public class RegisterController {
 	
 	@RequestMapping(value="register/submit", method=RequestMethod.POST)
 	public String submitNewUser(@ModelAttribute("chatter") Chatter newChatter, ModelMap model) {
+		// Check if the submitted email exists in the database
+		Chatter chatterDB = chatterServicce.getChatterByEmail(newChatter.getEmail());
+		if (chatterDB != null) {
+			model.addAttribute("msg", "Error! The email is already existed in the database. Please try another email.");
+			model.addAttribute("command", new Chatter());
+			return "register";
+		}
+		
 		String hashedPassword = passwordEncoder.encodePassword(newChatter.getPassword(), null);
 		newChatter.setPassword(hashedPassword);
 		

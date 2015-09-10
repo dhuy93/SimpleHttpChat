@@ -55,7 +55,8 @@ public class ChatterServiceImpl implements ChatterService {
 		userdto.setFirstname(foundUser.getFirstname());
 		userdto.setLastname(foundUser.getLastname());
 		userdto.setPassword(foundUser.getPassword());
-		
+
+		userdto.setEmailList(foundUser.getEmailList());
 		return userdto;
 	}
 
@@ -63,7 +64,7 @@ public class ChatterServiceImpl implements ChatterService {
 	public List<String> addFriend(String ownerEmail, String friendEmail) {
 		List<String> emailList = chatterRepo.addFriend(ownerEmail, friendEmail);
 		chatterRepo.addFriend(friendEmail, ownerEmail);
-		
+
 		return emailList;
 	}
 

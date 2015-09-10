@@ -14,7 +14,6 @@ import org.springframework.data.mongodb.core.query.Update;
 
 import com.example.chat.model.Chatter;
 import com.example.chat.repository.extend.ChatterRepositoryExtend;
-import com.google.gson.Gson;
 
 /**
  * @author ldhuy
@@ -32,7 +31,7 @@ public class ChatterRepositoryImpl implements ChatterRepositoryExtend {
 		Chatter foundChatter = mongoTpl.findOne(new Query(Criteria.where("email").is(email)), Chatter.class);
 		return foundChatter;
 	}
-	
+
 	@Override
 	public List<String> addFriend(String ownerEmail, String friendEmail) {
 		Chatter chatter = this.findByEmail(ownerEmail);
@@ -44,14 +43,12 @@ public class ChatterRepositoryImpl implements ChatterRepositoryExtend {
 			emailList.add(friendEmail);
 			Query query = new Query(Criteria.where("email").is(ownerEmail));
 			Update update = new Update();
-			Gson gson = new Gson();
-			String emailListStr = gson.toJson(emailList);
-			update.set("emailList", emailListStr);
+			update.set("emailList", emailList);
 			mongoTpl.updateFirst(query, update, Chatter.class);
 			chatter = this.findByEmail(ownerEmail);
 			return chatter.getEmailList();
 		}
-		
+
 		return chatter.getEmailList();
 	}
 

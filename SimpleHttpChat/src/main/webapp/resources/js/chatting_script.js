@@ -5,11 +5,13 @@ function doAjax() {
 	var palEmailStr = document.getElementById('palEmailInput').value;
 	var newContentStr = document.getElementById('buffer').value;
 	$.ajax({
-		url: 'refreshconversation.html',
-		data: ({'palEmail':palEmailStr,
-				'newContent':newContentStr}),
-		dataType: 'json',
-		success: function(data) {
+		url : 'refreshconversation.html',
+		data : ({
+			'palEmail' : palEmailStr,
+			'newContent' : newContentStr
+		}),
+		dataType : 'json',
+		success : function(data) {
 			console.log(data);
 			$('#items').empty();
 			$.each(data, function(i, val) {
